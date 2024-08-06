@@ -327,7 +327,7 @@ def load_and_transform_video_data(
 
         all_video = []
         
-        save_video.append(video.get_clip(0,video.duration))
+        save_video.append([video.get_clip(0,video.duration),video.duration,video._fps])
         for clip_timepoints in all_clips_timepoints:
             # Read the clip, get frames
             clip = video.get_clip(clip_timepoints[0], clip_timepoints[1])
