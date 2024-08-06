@@ -298,6 +298,8 @@ def load_and_transform_video_data(
         return None
 
     video_outputs = []
+    save_video = []
+        
     video_transform = transforms.Compose(
         [
             pv_transforms.ShortSideScale(224),
@@ -324,6 +326,8 @@ def load_and_transform_video_data(
         all_clips_timepoints = get_clip_timepoints(clip_sampler, video.duration)
 
         all_video = []
+        
+        save_video.append(video.get_clip(0,video.duration))
         for clip_timepoints in all_clips_timepoints:
             # Read the clip, get frames
             clip = video.get_clip(clip_timepoints[0], clip_timepoints[1])
@@ -340,4 +344,4 @@ def load_and_transform_video_data(
         all_video = torch.stack(all_video, dim=0)
         video_outputs.append(all_video)
 
-    return torch.stack(video_outputs, dim=0).to(device)
+    return torch.stack(video_outputs, dim=0).to(device),save_video
